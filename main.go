@@ -9,7 +9,6 @@ import (
 
 // main ...
 func main() {
-
 	router := gin.Default()
 	router.GET("/:id", func(c *gin.Context) {
 		// Pramを処理する
@@ -20,18 +19,18 @@ func main() {
 			return
 		}
 		if id <= 0 {
-			c.JSON(400, gin.H{"status": "id shoud be bigger than 0"})
+			c.JSON(400, gin.H{"status": "id should be bigger than 0"})
 			return
 		}
-	})
-	// データを処理する
-	ctrl := controllers.NewUser()
-	result := ctrl.Get(id)
-	if result == nil || reflect.ValueOf(result).IsNil() {
-		c.JSON(404, gin.H{})
-		return
-	}
+		// データを処理する
+		ctrl := controllers.NewUser()
+		result := ctrl.Get(id)
+		if result == nil || reflect.ValueOf(result).IsNil() {
+			c.JSON(404, gin.H{})
+			return
+		}
 
-	c.JSON(200, result)
+		c.JSON(200, result)
+	})
 	router.Run(":8080")
 }
