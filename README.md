@@ -1,8 +1,17 @@
 # bookshelf
 
-本のレビューを共有するWebアプリ
+Share book's reviews web site.
 
-### 環境
-Go 1.5.3
-WAF: Gin
-MySQL + xorm
+## Environment
+
+### Backend
+- Go 1.7
+ - Gin
+ - xorm
+
+### Fronend
+- Babel6
+- ES6
+- React
+ - Router
+ - Redux

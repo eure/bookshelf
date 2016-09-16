@@ -1,36 +1,27 @@
 package main
 
 import (
-	"bookshelf/controllers"
+	"github.com/eure/kamimai"
+	"github.com/eure/kamimai/core"
+	_ "github.com/eure/kamimai/driver"
 	"github.com/gin-gonic/gin"
-	"reflect"
-	"strconv"
+
+	"github.com/eure/bookshelf/app/routes"
 )
+
+func syncDatabase() {
+	conf, err := core.NewConfig("database/mysql")
+	if err != nil {
+		panic(err)
+	}
+	conf.WithEnv("development")
+	kamimai.Sync(conf)
+}
 
 // main ...
 func main() {
-	router := gin.Default()
-	router.GET("/:id", func(c *gin.Context) {
-		// Pramを処理する
-		n := c.Param("id")
-		id, err := strconv.Atoi(n)
-		if err != nil {
-			c.JSON(400, err)
-			return
-		}
-		if id <= 0 {
-			c.JSON(400, gin.H{"status": "id should be bigger than 0"})
-			return
-		}
-		// データを処理する
-		ctrl := controllers.NewUser()
-		result := ctrl.Get(id)
-		if result == nil || reflect.ValueOf(result).IsNil() {
-			c.JSON(404, gin.H{})
-			return
-		}
-
-		c.JSON(200, result)
-	})
-	router.Run(":8080")
+	if gin.IsDebugging() {
+		syncDatabase()
+	}
+	routes.Handler().Run(":8080")
 }
