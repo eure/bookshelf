@@ -1,6 +1,6 @@
 # bookshelf
 
-Share book's reviews web site.
+Manage your books.
 
 ## Environment
 
